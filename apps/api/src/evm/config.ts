@@ -17,7 +17,8 @@ export type NetworkID =
   | 'base'
   | 'mnt'
   | 'ape'
-  | 'curtis';
+  | 'curtis'
+  | 'harmony';
 
 const START_BLOCKS: Record<NetworkID, number> = {
   eth: 18962278,
@@ -28,7 +29,8 @@ const START_BLOCKS: Record<NetworkID, number> = {
   base: 23524251,
   mnt: 75662182,
   ape: 12100384,
-  curtis: 16682282
+  curtis: 16682282,
+  harmony: 75063578 // Замените на реальный номер блока начала
 };
 
 export type FullConfig = {

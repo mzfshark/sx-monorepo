@@ -55,6 +55,48 @@ function createStandardConfig(
   };
 }
 
+function createHarmonyConfig(
+  eip712ChainId: number,
+  additionalProperties: AdditionalProperties = {}
+) {
+  const additionalAuthenticators = additionalProperties.authenticators || {};
+  const additionalStrategies = additionalProperties.strategies || {};
+  const additionalExecutionStrategies =
+    additionalProperties.executionStrategies || {};
+
+  return {
+    Meta: {
+      eip712ChainId,
+      maxPriorityFeePerGas: additionalProperties.maxPriorityFeePerGas,
+      proxyFactory: '0x0ED522c515927DAcB86Ae4d42d0756c191f4D5d4',
+      masterSpace: '0xc786bf2a39DEDB32718dE65408E6922831fF1017'
+    },
+    Authenticators: {
+      EthSig: '0x5f9B7D78c9a37a439D78f801E0E339C6E711e260',
+      EthSigV2: '0xe2a885Ee727CEC01872601584F49B2471A11150A',
+      EthTx: '0xD590Dc5E3cDae3482b3A2e5Dd4dB8D78B9c9F995',
+      ...additionalAuthenticators
+    },
+    Strategies: {
+      Vanilla: '0x7D619Bdc41Df7F36DdEeda5Bd38D1e1fDAEfB4Dc',
+      Comp: '0x4433165dAd4DeCcad9710D163Fb55c896289f432',
+      OZVotes: '0x087bF99d9070Cf1cF341f44af10002cEd50546EC',
+      Whitelist: '0x32586F6bcf6649C9e31990AAB83071D28623154b',
+      ...additionalStrategies
+    },
+    ProposalValidations: {
+      VotingPower: '0x6Ca82805618dD1D6A789Ec13b7A8b04Af69A718f'
+    },
+    ExecutionStrategies: {
+      SimpleQuorumAvatar: '0x3E7eD188A5cDc15C03527308735f22724084cFA8',
+      SimpleQuorumTimelock: '0xaec66d7930B701cbB77987C8B97022e381a44798',
+      Axiom: null,
+      Isokratia: null,
+      ...additionalExecutionStrategies
+    }
+  };
+}
+
 function createEvmConfig(
   networkId: keyof typeof evmNetworks
 ): EvmNetworkConfig {
@@ -141,7 +183,8 @@ export const evmNetworks = {
     strategies: {
       ApeGas: '0x8E7083D3D0174Fe7f33821b2b4bDFE0fEE9C8e87'
     }
-  })
+  }),
+  harmony: createHarmonyConfig(1666600000)
 } as const;
 
 export const evmMainnet = createEvmConfig('eth');
@@ -153,3 +196,4 @@ export const evmBase = createEvmConfig('base');
 export const evmMantle = createEvmConfig('mnt');
 export const evmApe = createEvmConfig('ape');
 export const evmCurtis = createEvmConfig('curtis');
+export const evmHarmony = createEvmConfig('harmony');

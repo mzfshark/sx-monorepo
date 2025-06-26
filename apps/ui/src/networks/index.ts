@@ -17,6 +17,7 @@ const ethereumNetwork = createEvmNetwork('eth');
 const apeNetwork = createEvmNetwork('ape');
 const curtisNetwork = createEvmNetwork('curtis');
 const sepoliaNetwork = createEvmNetwork('sep');
+const harmonyNetwork = createEvmNetwork('harmony');
 
 export const enabledNetworks: NetworkID[] = import.meta.env
   .VITE_ENABLED_NETWORKS
@@ -34,7 +35,8 @@ export const enabledNetworks: NetworkID[] = import.meta.env
       'curtis',
       'sep',
       'sn',
-      'sn-sep'
+      'sn-sep',
+      'harmony'
     ];
 
 export const evmNetworks: NetworkID[] = [
@@ -46,7 +48,8 @@ export const evmNetworks: NetworkID[] = [
   'oeth',
   'ape',
   'curtis',
-  'sep'
+  'sep',
+  'harmony'
 ];
 export const offchainNetworks: NetworkID[] = ['s', 's-tn'];
 export const starknetNetworks: NetworkID[] = ['sn', 'sn-sep'];
@@ -71,6 +74,7 @@ export const getNetwork = (id: NetworkID) => {
   if (id === 'sep') return sepoliaNetwork;
   if (id === 'sn') return starknetNetwork;
   if (id === 'sn-sep') return starknetSepoliaNetwork;
+  if (id === 'harmony') return harmonyNetwork;
 
   throw new Error(`Unknown network ${id}`);
 };

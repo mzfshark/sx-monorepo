@@ -102,6 +102,15 @@ export const METADATA: Record<string, Metadata> = {
     avatar:
       'ipfs://bafkreid7ndxh6y2ljw2jhbisodiyrhcy2udvnwqgon5wgells3kh4si5z4',
     blockTime: 13.2816
+  },
+  harmony: {
+    name: 'Harmony',
+    ticker: 'ETH',
+    chainId: 1666600000,
+    apiUrl: 'https://api.harmony.one',
+    avatar:
+      'ipfs://bafkreihcx4zkpfjfcs6fazjp6lcyes4pdhqx3uvnjuo5uj2dlsjopxv5am',
+    blockTime: 2
   }
 };
 
@@ -182,7 +191,8 @@ export function createEvmNetwork(networkId: NetworkID): Network {
       'mnt',
       'arb1',
       'ape',
-      'curtis'
+      'curtis',
+      'harmony'
     ].includes(networkId),
     managerConnectors: EVM_CONNECTORS,
     actions: createActions(provider, helpers, chainId),

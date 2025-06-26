@@ -39,6 +39,7 @@ export const CHAIN_IDS: Record<Exclude<NetworkID, 's' | 's-tn'>, ChainId> = {
   ape: 33139,
   curtis: 33111,
   sep: 11155111,
+  harmony: 1666600000,
   // Starknet
   sn: '0x534e5f4d41494e',
   'sn-sep': '0x534e5f5345504f4c4941'
@@ -53,7 +54,8 @@ export const COINGECKO_ASSET_PLATFORMS = {
   8453: 'base',
   42161: 'arbitrum-one',
   33139: 'apechain',
-  33111: 'apechain'
+  33111: 'apechain',
+  1666600000: 'harmony'
 };
 
 export const COINGECKO_BASE_ASSETS = {

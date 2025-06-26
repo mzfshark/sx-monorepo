@@ -36,7 +36,8 @@ export type NetworkID =
   | 'curtis'
   | 'sep'
   | 'sn'
-  | 'sn-sep';
+  | 'sn-sep'
+  | 'harmony';
 
 export type ChainId = number | string;
 
