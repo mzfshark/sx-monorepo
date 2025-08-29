@@ -1,10 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "public" } }
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "apps" } }
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "public": "/index.html" }
+    { "src": "/(.*)", "apps " : "/index.html" }
   ]
 }
