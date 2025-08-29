@@ -65,7 +65,7 @@ yarn dev:interactive
 ```
 
 ### Setup
-
+ 
 You need to have Docker running on your machine.
 
 In `apps/api` and `apps/mana` copy `.env.example` to `.env` files.
