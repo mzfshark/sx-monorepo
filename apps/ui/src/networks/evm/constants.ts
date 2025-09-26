@@ -236,7 +236,7 @@ export function createConstants(
     {
       address: config.Strategies.Whitelist,
       type: 'MerkleWhitelist',
-      name: 'Whitelist',
+      name: 'Validators Only',
       about:
         'A strategy that defines a list of addresses each with designated voting power, using a Merkle tree for verification.',
       link: `${HELPDESK_URL}/en/articles/9839118-whitelist-voting-strategy`,
@@ -346,218 +346,218 @@ export function createConstants(
         }
       }
     },
-    {
-      address: config.Strategies.OZVotes,
-      name: 'ERC-20 Votes (EIP-5805)',
-      about:
-        'A strategy that allows delegated balances of OpenZeppelin style checkpoint tokens to be used as voting power.',
-      link: `${HELPDESK_URL}/en/articles/9839125-erc-20-votes-eip-5805-voting-strategy`,
-      icon: IHCode,
-      generateSummary: (params: Record<string, any>) =>
-        `(${shorten(params.contractAddress)}, ${params.decimals})`,
-      generateParams: async (params: Record<string, any>) => [
-        params.contractAddress
-      ],
-      generateMetadata: async (params: Record<string, any>) => ({
-        name: 'ERC-20 Votes (EIP-5805)',
-        properties: {
-          symbol: params.symbol,
-          decimals: parseInt(params.decimals),
-          token: params.contractAddress
-        }
-      }),
-      parseParams: async (
-        params: string,
-        metadata: StrategyParsedMetadata | null
-      ) => {
-        if (!metadata) throw new Error('Missing metadata');
+    // {
+    //   address: config.Strategies.OZVotes,
+    //   name: 'ERC-20 Votes (EIP-5805)',
+    //   about:
+    //     'A strategy that allows delegated balances of OpenZeppelin style checkpoint tokens to be used as voting power.',
+    //   link: `${HELPDESK_URL}/en/articles/9839125-erc-20-votes-eip-5805-voting-strategy`,
+    //   icon: IHCode,
+    //   generateSummary: (params: Record<string, any>) =>
+    //     `(${shorten(params.contractAddress)}, ${params.decimals})`,
+    //   generateParams: async (params: Record<string, any>) => [
+    //     params.contractAddress
+    //   ],
+    //   generateMetadata: async (params: Record<string, any>) => ({
+    //     name: 'ERC-20 Votes (EIP-5805)',
+    //     properties: {
+    //       symbol: params.symbol,
+    //       decimals: parseInt(params.decimals),
+    //       token: params.contractAddress
+    //     }
+    //   }),
+    //   parseParams: async (
+    //     params: string,
+    //     metadata: StrategyParsedMetadata | null
+    //   ) => {
+    //     if (!metadata) throw new Error('Missing metadata');
 
-        return {
-          contractAddress: metadata.token,
-          decimals: metadata.decimals,
-          symbol: metadata.symbol
-        };
-      },
-      paramsDefinition: {
-        type: 'object',
-        title: 'Params',
-        additionalProperties: false,
-        required: ['contractAddress', 'decimals'],
-        properties: {
-          contractAddress: {
-            type: 'string',
-            format: 'address',
-            chainId: config.Meta.eip712ChainId,
-            title: 'Token address',
-            examples: ['0x0000…']
-          },
-          decimals: {
-            type: 'integer',
-            title: 'Decimals',
-            examples: ['18']
-          },
-          symbol: {
-            type: 'string',
-            maxLength: MAX_SYMBOL_LENGTH,
-            title: 'Symbol',
-            examples: ['e.g. UNI']
-          }
-        }
-      }
-    },
-    {
-      address: config.Strategies.Comp,
-      name: 'ERC-20 Votes Comp (EIP-5805)',
-      about:
-        'A strategy that allows delegated balances of Compound style checkpoint tokens to be used as voting power.',
-      icon: IHCode,
-      generateSummary: (params: Record<string, any>) =>
-        `(${shorten(params.contractAddress)}, ${params.decimals})`,
-      generateParams: async (params: Record<string, any>) => [
-        params.contractAddress
-      ],
-      generateMetadata: async (params: Record<string, any>) => ({
-        name: 'ERC-20 Votes Comp (EIP-5805)',
-        properties: {
-          symbol: params.symbol,
-          decimals: parseInt(params.decimals),
-          token: params.contractAddress
-        }
-      }),
-      parseParams: async (
-        params: string,
-        metadata: StrategyParsedMetadata | null
-      ) => {
-        if (!metadata) throw new Error('Missing metadata');
+    //     return {
+    //       contractAddress: metadata.token,
+    //       decimals: metadata.decimals,
+    //       symbol: metadata.symbol
+    //     };
+    //   },
+    //   paramsDefinition: {
+    //     type: 'object',
+    //     title: 'Params',
+    //     additionalProperties: false,
+    //     required: ['contractAddress', 'decimals'],
+    //     properties: {
+    //       contractAddress: {
+    //         type: 'string',
+    //         format: 'address',
+    //         chainId: config.Meta.eip712ChainId,
+    //         title: 'Token address',
+    //         examples: ['0x0000…']
+    //       },
+    //       decimals: {
+    //         type: 'integer',
+    //         title: 'Decimals',
+    //         examples: ['18']
+    //       },
+    //       symbol: {
+    //         type: 'string',
+    //         maxLength: MAX_SYMBOL_LENGTH,
+    //         title: 'Symbol',
+    //         examples: ['e.g. UNI']
+    //       }
+    //     }
+    //   }
+    // },
+    // {
+    //   address: config.Strategies.Comp,
+    //   name: 'ERC-20 Votes Comp (EIP-5805)',
+    //   about:
+    //     'A strategy that allows delegated balances of Compound style checkpoint tokens to be used as voting power.',
+    //   icon: IHCode,
+    //   generateSummary: (params: Record<string, any>) =>
+    //     `(${shorten(params.contractAddress)}, ${params.decimals})`,
+    //   generateParams: async (params: Record<string, any>) => [
+    //     params.contractAddress
+    //   ],
+    //   generateMetadata: async (params: Record<string, any>) => ({
+    //     name: 'ERC-20 Votes Comp (EIP-5805)',
+    //     properties: {
+    //       symbol: params.symbol,
+    //       decimals: parseInt(params.decimals),
+    //       token: params.contractAddress
+    //     }
+    //   }),
+    //   parseParams: async (
+    //     params: string,
+    //     metadata: StrategyParsedMetadata | null
+    //   ) => {
+    //     if (!metadata) throw new Error('Missing metadata');
 
-        return {
-          contractAddress: metadata.token,
-          decimals: metadata.decimals,
-          symbol: metadata.symbol
-        };
-      },
-      paramsDefinition: {
-        type: 'object',
-        title: 'Params',
-        additionalProperties: false,
-        required: ['contractAddress', 'decimals'],
-        properties: {
-          contractAddress: {
-            type: 'string',
-            format: 'address',
-            chainId: config.Meta.eip712ChainId,
-            title: 'Token address',
-            examples: ['0x0000…']
-          },
-          decimals: {
-            type: 'integer',
-            title: 'Decimals',
-            examples: ['18']
-          },
-          symbol: {
-            type: 'string',
-            maxLength: MAX_SYMBOL_LENGTH,
-            title: 'Symbol',
-            examples: ['e.g. UNI']
-          }
-        }
-      }
-    },
-    ...(config.Strategies.ApeGas
-      ? [
-          {
-            address: config.Strategies.ApeGas,
-            name: 'ApeChain Delegated Gas',
-            about:
-              'A strategy that allows delegated balances of APE gas token to be used as voting power.',
-            icon: IHCode,
-            generateSummary: (params: Record<string, any>) =>
-              `(${shorten(params.delegationId)})`,
-            generateParams: async (params: Record<string, any>) => {
-              const apeGasConfig = APE_GAS_CONFIGS[config.Meta.eip712ChainId];
+    //     return {
+    //       contractAddress: metadata.token,
+    //       decimals: metadata.decimals,
+    //       symbol: metadata.symbol
+    //     };
+    //   },
+    //   paramsDefinition: {
+    //     type: 'object',
+    //     title: 'Params',
+    //     additionalProperties: false,
+    //     required: ['contractAddress', 'decimals'],
+    //     properties: {
+    //       contractAddress: {
+    //         type: 'string',
+    //         format: 'address',
+    //         chainId: config.Meta.eip712ChainId,
+    //         title: 'Token address',
+    //         examples: ['0x0000…']
+    //       },
+    //       decimals: {
+    //         type: 'integer',
+    //         title: 'Decimals',
+    //         examples: ['18']
+    //       },
+    //       symbol: {
+    //         type: 'string',
+    //         maxLength: MAX_SYMBOL_LENGTH,
+    //         title: 'Symbol',
+    //         examples: ['e.g. UNI']
+    //       }
+    //     }
+    //   }
+    // },
+    // ...(config.Strategies.ApeGas
+    //   ? [
+    //       {
+    //         address: config.Strategies.ApeGas,
+    //         name: 'ApeChain Delegated Gas',
+    //         about:
+    //           'A strategy that allows delegated balances of APE gas token to be used as voting power.',
+    //         icon: IHCode,
+    //         generateSummary: (params: Record<string, any>) =>
+    //           `(${shorten(params.delegationId)})`,
+    //         generateParams: async (params: Record<string, any>) => {
+    //           const apeGasConfig = APE_GAS_CONFIGS[config.Meta.eip712ChainId];
 
-              const abiCoder = new AbiCoder();
+    //           const abiCoder = new AbiCoder();
 
-              return [
-                abiCoder.encode(
-                  [
-                    'uint256',
-                    'uint256',
-                    'address',
-                    'address',
-                    'bytes32',
-                    'address'
-                  ],
-                  [
-                    apeGasConfig.l1ChainId,
-                    config.Meta.eip712ChainId,
-                    apeGasConfig.herodotusContract,
-                    apeGasConfig.herodotusSatelliteContract,
-                    params.delegationId,
-                    apeGasConfig.registryContract
-                  ]
-                )
-              ];
-            },
-            generateMetadata: async (params: Record<string, any>) => {
-              const pinned = await pin({ delegationId: params.delegationId });
+    //           return [
+    //             abiCoder.encode(
+    //               [
+    //                 'uint256',
+    //                 'uint256',
+    //                 'address',
+    //                 'address',
+    //                 'bytes32',
+    //                 'address'
+    //               ],
+    //               [
+    //                 apeGasConfig.l1ChainId,
+    //                 config.Meta.eip712ChainId,
+    //                 apeGasConfig.herodotusContract,
+    //                 apeGasConfig.herodotusSatelliteContract,
+    //                 params.delegationId,
+    //                 apeGasConfig.registryContract
+    //               ]
+    //             )
+    //           ];
+    //         },
+    //         generateMetadata: async (params: Record<string, any>) => {
+    //           const pinned = await pin({ delegationId: params.delegationId });
 
-              return {
-                name: 'ApeChain Delegated Gas',
-                properties: {
-                  decimals: 18,
-                  symbol: params.symbol,
-                  payload: `ipfs://${pinned.cid}`
-                }
-              };
-            },
-            parseParams: async (
-              params: string,
-              metadata: StrategyParsedMetadata | null
-            ) => {
-              if (!metadata) throw new Error('Missing metadata');
-              if (!metadata.payload) {
-                throw new Error('Missing metadata payload');
-              }
+    //           return {
+    //             name: 'ApeChain Delegated Gas',
+    //             properties: {
+    //               decimals: 18,
+    //               symbol: params.symbol,
+    //               payload: `ipfs://${pinned.cid}`
+    //             }
+    //           };
+    //         },
+    //         parseParams: async (
+    //           params: string,
+    //           metadata: StrategyParsedMetadata | null
+    //         ) => {
+    //           if (!metadata) throw new Error('Missing metadata');
+    //           if (!metadata.payload) {
+    //             throw new Error('Missing metadata payload');
+    //           }
 
-              const metadataUrl = getUrl(metadata.payload);
-              if (!metadataUrl) {
-                throw new Error('Invalid metadata URL');
-              }
+    //           const metadataUrl = getUrl(metadata.payload);
+    //           if (!metadataUrl) {
+    //             throw new Error('Invalid metadata URL');
+    //           }
 
-              const res = await fetch(metadataUrl);
-              const { delegationId } = await res.json();
+    //           const res = await fetch(metadataUrl);
+    //           const { delegationId } = await res.json();
 
-              return {
-                delegationId,
-                symbol: metadata.symbol
-              };
-            },
-            paramsDefinition: {
-              type: 'object',
-              title: 'Params',
-              additionalProperties: false,
-              required: ['delegationId', 'symbol'],
-              properties: {
-                delegationId: {
-                  type: 'string',
-                  format: 'bytes32',
-                  title: 'Delegation ID',
-                  examples: [
-                    'e.g. 0x0000000000000000000000000000000000000000000000000000000000000001'
-                  ]
-                },
-                symbol: {
-                  type: 'string',
-                  maxLength: MAX_SYMBOL_LENGTH,
-                  title: 'Symbol',
-                  examples: ['e.g. UNI']
-                }
-              }
-            }
-          }
-        ]
-      : [])
+    //           return {
+    //             delegationId,
+    //             symbol: metadata.symbol
+    //           };
+    //         },
+    //         paramsDefinition: {
+    //           type: 'object',
+    //           title: 'Params',
+    //           additionalProperties: false,
+    //           required: ['delegationId', 'symbol'],
+    //           properties: {
+    //             delegationId: {
+    //               type: 'string',
+    //               format: 'bytes32',
+    //               title: 'Delegation ID',
+    //               examples: [
+    //                 'e.g. 0x0000000000000000000000000000000000000000000000000000000000000001'
+    //               ]
+    //             },
+    //             symbol: {
+    //               type: 'string',
+    //               maxLength: MAX_SYMBOL_LENGTH,
+    //               title: 'Symbol',
+    //               examples: ['e.g. UNI']
+    //             }
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   : [])
   ];
 
   const EDITOR_PROPOSAL_VALIDATION_VOTING_STRATEGIES =

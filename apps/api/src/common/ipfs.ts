@@ -32,13 +32,19 @@ export async function handleProposalMetadata(
   proposalMetadataItem.choices = ['For', 'Against', 'Abstain'];
   proposalMetadataItem.labels = [];
 
+  console.log('getJSON(metadataUri)', metadataUri)
+
   const metadata: any = await getJSON(metadataUri);
+
+  console.log('metadata loaded', metadata)
+
   if (metadata.title) proposalMetadataItem.title = metadata.title;
   if (metadata.body) proposalMetadataItem.body = metadata.body;
   if (metadata.discussion)
     proposalMetadataItem.discussion = metadata.discussion;
 
   if (metadata.execution) {
+    try {
     const recoveredHash = getExecutionHash({
       type,
       executionType,
@@ -47,7 +53,10 @@ export async function handleProposalMetadata(
     });
 
     if (recoveredHash === executionHash) {
-      proposalMetadataItem.execution = JSON.stringify(metadata.execution);
+        proposalMetadataItem.execution = JSON.stringify(metadata.execution);
+      }
+    } catch (error) {
+      console.log('error getExecutionHash', error);
     }
   }
 
@@ -137,7 +146,7 @@ export async function handleStrategiesMetadata(
     | typeof StrategiesParsedMetadataItem
     | typeof VotingPowerValidationStrategiesParsedMetadataItem = StrategiesParsedMetadataItem
 ) {
-  const strategiesDecimals = [];
+  const strategiesDecimals: number[] = [];
 
   for (let i = 0; i < metadataUris.length; i++) {
     const metadataUri = metadataUris[i];

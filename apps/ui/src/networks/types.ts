@@ -470,7 +470,7 @@ export type ReadWriteNetwork = BaseNetwork & {
 };
 export type Network = ReadOnlyNetwork | ReadWriteNetwork;
 
-export type ExplorePageProtocol = 'snapshot' | 'snapshot-x';
+export type ExplorePageProtocol = 'snapshot-x';
 
 export type ProtocolConfig = {
   key: ExplorePageProtocol;

@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { StrategyConfig, StrategyTemplate } from '@/networks/types';
 import { NetworkID } from '@/types';
+import { loadStakingData } from '@/networks/offchain/api';
+
+const getValidators = async () => {
+  const stakingData = await loadStakingData();
+
+  const validatorsWithVotingPower = stakingData.validatorsWithVotingPower.map(
+    validator => `${validator.address}:${validator.votingPower}`
+  );
+
+  return validatorsWithVotingPower.join('\n');
+}
 
 const model = defineModel<StrategyConfig[]>({ required: true });
 
@@ -27,13 +38,17 @@ const activeStrategiesMap = computed(() =>
   Object.fromEntries(model.value.map(strategy => [strategy.name, strategy]))
 );
 
-function addStrategy(strategy: StrategyTemplate) {
+async function addStrategy(strategy: StrategyTemplate) {
   if (limitReached.value) return;
+
+  const whitelist = await getValidators();
 
   const strategyConfig = {
     id: crypto.randomUUID(),
     params: {
-      ...props.defaultParams
+      ...props.defaultParams,
+      symbol: "ONE",
+      whitelist
     },
     ...strategy
   };
@@ -47,6 +62,7 @@ function addStrategy(strategy: StrategyTemplate) {
 
 function editStrategy(strategy: StrategyConfig) {
   editedStrategy.value = strategy;
+
   editStrategyModalOpen.value = true;
 }
 
@@ -113,6 +129,7 @@ function handleStrategySave(value: Record<string, any>) {
         :initial-state="editedStrategy.params"
         @close="editStrategyModalOpen = false"
         @save="handleStrategySave"
+        :disabled="editedStrategy.type === 'MerkleWhitelist'"
       />
     </teleport>
   </div>

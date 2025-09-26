@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import defaultRoutes from '@/routes/default';
 import whiteLabelRoutes from '@/routes/whiteLabel';
+import NotifyBanner from './NotifyBanner.vue';
 
 const route = useRoute();
 const router = useRouter();
 const { app } = useApp();
+
 const {
   init: initWhiteLabel,
   isWhiteLabel,
@@ -37,7 +39,9 @@ watch(
   { immediate: true }
 );
 
-onMounted(() => initWhiteLabel());
+onMounted(() => {
+  initWhiteLabel();
+});
 </script>
 
 <template>
@@ -47,4 +51,10 @@ onMounted(() => initWhiteLabel());
     <LayoutApp v-else />
     <AppFooter />
   </div>
+  <NotifyBanner
+    title=""
+    description="The service is operating in beta testing mode."
+    type="warning"
+    closable
+  />
 </template>

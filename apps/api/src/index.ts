@@ -44,9 +44,9 @@ async function run() {
 
   await startApiServer(checkpoint);
 
-  if (IS_INDEXER) {
+  // if (IS_INDEXER) {
     await startIndexer(checkpoint);
-  }
+  // }
 }
 
 run();

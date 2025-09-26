@@ -11,8 +11,6 @@ const props = defineProps<{
 
 const { copy, copied } = useClipboard();
 
-const contactsStore = useContactsStore();
-
 const sortBy = ref(
   'vp-desc' as 'vp-desc' | 'vp-asc' | 'created-desc' | 'created-asc'
 );
@@ -44,8 +42,10 @@ const {
   proposal: toRef(props, 'proposal'),
   choiceFilter,
   sortBy,
-  recountVotes: false,
+  recountVotes: true,
 });
+
+const contactsStore = useContactsStore();
 
 console.log(111, data?._object?.data?.pages);
 
@@ -77,7 +77,7 @@ function handleScrollEvent(target: HTMLElement) {
 }
 
 onMounted(() => {
-  contactsStore.setActivePage('votes');
+  contactsStore.setActivePage('votes-offchain');
 });
 </script>
 
@@ -204,28 +204,6 @@ onMounted(() => {
               />
             </div>
           </AppLink>
-          <!-- <AppLink
-            :to="{
-              name: 'space-user-statement',
-              params: {
-                space: `${proposal.network}:${proposal.space.id}`,
-                user: vote.voter.id
-              }
-            }"
-            class="leading-[22px] !ml-4 py-3 max-w-[218px] w-[218px] flex items-center space-x-3 truncate"
-          >
-            <UiStamp :id="vote.voter.id" :size="32" />
-            <div class="flex flex-col truncate">
-              <h4
-                class="truncate"
-                v-text="vote.voter.name || shortenAddress(vote.voter.id)"
-              />
-              <div
-                class="text-[17px] text-skin-text truncate"
-                v-text="shortenAddress(vote.voter.id)"
-              />
-            </div>
-          </AppLink> -->
           <button
             type="button"
             class="grow w-[40%] flex flex-col items-start justify-center truncate leading-[22px]"

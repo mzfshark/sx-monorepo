@@ -446,3 +446,11 @@ input:placeholder-shown {
 div[data-tippy-root] {
   @apply break-words;
 }
+
+.el-alert__description {
+  font-size: 18px !important;
+}
+
+.el-alert__title {
+  font-size: 22px !important;
+}

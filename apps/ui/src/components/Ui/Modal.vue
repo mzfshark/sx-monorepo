@@ -88,7 +88,7 @@ watch(open, val => {
     background-color: rgba(var(--bg));
     padding-left: 0 !important;
     padding-right: 0 !important;
-    max-width: 440px;
+    max-width: 490px;
     overflow-y: auto !important;
     max-height: calc(100vh - 120px);
     display: flex;

@@ -10,6 +10,8 @@ import { _n, _p, _vp } from '@/helpers/utils';
 import { getNetwork, offchainNetworks } from '@/networks';
 import { PROPOSALS_KEYS } from '@/queries/proposals';
 import { Proposal as ProposalType } from '@/types';
+import { loadStakingData } from '@/networks/offchain/api';
+import { useRoute } from 'vue-router'
 
 const DEFAULT_MAX_CHOICES = 6;
 
@@ -29,11 +31,40 @@ const props = withDefaults(
   }
 );
 
+const route = useRoute()
+
+const isOffchain = computed(() => {
+  return route.matched.at(-1)?.name === 'space-proposal-votes-offchain'
+})
+
+const isWhitelist = computed(() => {
+  return props.proposal.strategies.includes('0x32586F6bcf6649C9e31990AAB83071D28623154b');
+})
+
 const queryClient = useQueryClient();
 
 const displayAllChoices = ref(false);
 
+const stakingData = ref(null);
+
 const totalProgress = computed(() => quorumProgress(props.proposal));
+
+const parsedTotal = computed(() => {
+  return stakingData?.value?.proposalVotes
+    .reduce((acc, v) => acc + Number(v.vp), 0);
+});
+
+const percentageQuorum = computed(() => {
+  if (!stakingData.value?.totalStake) return 0;
+
+  const percentage = (
+    (Number(parsedTotal.value) /
+      Number(stakingData?.value?.totalStake)) *
+    100
+  ).toFixed(2);
+
+  return percentage;
+});
 
 const placeholderResults = computed(() =>
   props.proposal.choices.map((_, i) => ({
@@ -44,14 +75,14 @@ const placeholderResults = computed(() =>
 );
 
 const results = computed(() => {
-  if (!props.proposal.scores.length) return placeholderResults.value;
+  if (!isOffchain.value) {
+    if (!props.proposal.scores.length) return placeholderResults.value;
 
-  // TODO: sx-api returns number, sx-subgraph returns string
-  const parsedTotal = parseFloat(
-    props.proposal.scores_total as unknown as string
-  );
+    const parsedTotal = parseFloat(
+      props.proposal.scores_total as unknown as string
+    );
 
-  return props.proposal.scores
+    return props.proposal.scores
     .map((score, i) => {
       const progress = parsedTotal !== 0 ? (score / parsedTotal) * 100 : 0;
 
@@ -62,7 +93,39 @@ const results = computed(() => {
       };
     })
     .sort((a, b) => b.progress - a.progress);
+  }
+
+  if (!props.proposal.scores.length || !stakingData.value) return placeholderResults.value;
+
+  // TODO: sx-api returns number, sx-subgraph returns string
+
+  console.log('results props.proposal.scores', props.proposal.scores);
+
+  return props.proposal.scores
+    .map((scoreValue, i) => {
+      const score = stakingData.value.proposalVotes
+        .filter(v => v.choice === i + 1)
+        .reduce((acc, v) => acc + Number(v.vp), 0);
+
+      const parsedTotal = stakingData.value.proposalVotes
+        .reduce((acc, v) => acc + Number(v.vp), 0);
+
+      const progress = parsedTotal !== 0 ? (score / parsedTotal) * 100 : 0;
+
+      console.log('score', score);
+      console.log('parsedTotal', parsedTotal);
+      console.log('progress', progress);
+
+      return {
+        choice: i + 1,
+        progress,
+        score
+      };
+    })
+    .sort((a, b) => b.progress - a.progress);
 });
+
+console.log(222, results);
 
 const hasOneExtra = computed(() => {
   return results.value.length === DEFAULT_MAX_CHOICES + 1;
@@ -120,7 +183,45 @@ async function refreshScores() {
   }
 }
 
+async function loadSValidatorsData() {
+  //  try {
+  const stakingDataRes = await loadStakingData();
+
+  console.log('totalStake', stakingDataRes.totalStake);
+
+  const network = getNetwork(props.proposal.network);
+
+  let res = await network.api.loadProposalVotes(
+    props.proposal,
+    { limit: 1000, skip: 0 },
+    'any',
+    'vp-desc'
+  );
+
+  console.log('res loadProposalVotes', res);
+
+  if (true) {
+    res = res.map(r => ({
+      ...r,
+      vp:
+        stakingDataRes.validatorsWithVotingPower.find(
+          v => v.address.toUpperCase() === r?.voter?.id?.toUpperCase()
+        )?.votingPower || '0'
+    }));
+  }
+
+  stakingData.value = { ...stakingDataRes, proposalVotes: res };
+
+  // } catch (e) {
+  //   console.warn('Failed to refresh scores', e);
+  // }
+}
+
 onMounted(() => {
+  if(props.withDetails) {
+    loadSValidatorsData();
+  }
+
   if (offchainNetworks.includes(props.proposal.network) && isFinalizing.value) {
     refreshScores();
   }
@@ -128,6 +229,36 @@ onMounted(() => {
 </script>
 
 <template>
+  <div
+    v-if="withDetails && isWhitelist"
+    class="flex flex-col items-center gap-2 border _3 choice-border rounded-lg"
+    style="margin-bottom: 15px"
+  >
+    <div>Quorum</div>
+    <el-progress type="dashboard" :percentage="percentageQuorum">
+      <template #default="{ percentage }">
+        <span class="percentage-value">{{ percentage }}%</span>
+        <!-- <span class="percentage-label">Progressing</span> -->
+      </template>
+    </el-progress>
+
+    <div>
+      {{
+        _n(Number(parsedTotal), 'compact', {
+          maximumFractionDigits: 3,
+          formatDust: true
+        }) +
+        '/' +
+        _n(Number(stakingData?.totalStake.toFixed(0)), 'compact', {
+          maximumFractionDigits: 3,
+          formatDust: true
+        })
+      }}
+    </div>
+
+    <!-- <el-progress :percentage="50" :stroke-width="15" striped /> -->
+  </div>
+
   <div v-if="isFinalizing && withDetails" class="border rounded-lg px-3 py-2.5">
     <div class="flex items-center gap-2 text-skin-link">
       <IH-exclamation-circle class="shrink-0" />

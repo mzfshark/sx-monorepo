@@ -231,6 +231,8 @@ export function useProposalQuery(
       );
       if (!proposal) return null;
 
+      console.log(777, proposal);
+
       return (await withAuthorNames([proposal]))[0];
     }
   });

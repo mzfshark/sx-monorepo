@@ -345,6 +345,12 @@ export function useSpaceSettings(space: Ref<Space>) {
       previousParams = previousParams ?? [];
     }
 
+    console.log(
+      111,
+      params,
+      previousParams
+    );
+
     // NOTE: Params need to be kept in raw bytes when we compare them as once stored they will be stored
     // as bytes (casing and padding are lost).
     const formattedParams = params.map(param =>
@@ -730,6 +736,13 @@ export function useSpaceSettings(space: Ref<Space>) {
     const authenticatorsValue = await getInitialStrategiesConfig(
       space.value.authenticators,
       network.value.constants.EDITOR_AUTHENTICATORS
+    );
+
+    console.log(
+      111,
+      space.value.strategies,
+      space.value.strategies_params,
+      space.value.strategies_parsed_metadata
     );
 
     const votingStrategiesValue = await getInitialStrategiesConfig(

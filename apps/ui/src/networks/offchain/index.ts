@@ -11,6 +11,8 @@ import { EVM_CONNECTORS } from '../common/constants';
 
 const HUB_URLS: Partial<Record<NetworkID, string | undefined>> = {
   s: 'https://hub.snapshot.org/graphql',
+  // s: 'http://localhost:3000/graphql',
+  // s: 'https://hmy-snapshotx-api.fly.dev/graphql',
   's-tn': 'https://testnet.hub.snapshot.org/graphql'
 };
 export const SNAPSHOT_URLS: Partial<Record<NetworkID, string | undefined>> = {

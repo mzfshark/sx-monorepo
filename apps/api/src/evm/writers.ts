@@ -695,6 +695,9 @@ export function createWriters(config: FullConfig) {
 
     try {
       const metadataUri = event.args.metadataUri;
+
+      console.log('metadataUri', metadataUri)
+
       await handleProposalMetadata(
         'evm',
         proposal.execution_strategy_type,

@@ -9,6 +9,7 @@ const CUSTOM_ERROR_SYMBOL = Symbol('customError');
 const props = withDefaults(
   defineProps<{
     open: boolean;
+    disabled?: boolean;
     networkId: NetworkID;
     strategyAddress: string;
     initialState?: any;
@@ -118,7 +119,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <UiModal :open="open" @close="$emit('close')">
+  <UiModal :open="open" @close="$emit('close')" style="width=800px">
     <template #header>
       <h3>Edit strategy</h3>
       <template v-if="showPicker">
@@ -176,6 +177,7 @@ watchEffect(() => {
         :error="formErrors"
         :definition="definition"
         @pick="handlePickerClick"
+        :disabled="props.disabled"
       />
       <UiTextarea
         v-else

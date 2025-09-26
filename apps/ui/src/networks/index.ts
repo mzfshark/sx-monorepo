@@ -92,13 +92,13 @@ export const enabledReadWriteNetworks: NetworkID[] = enabledNetworks.filter(
 
 export const explorePageProtocols: Record<ExplorePageProtocol, ProtocolConfig> =
   {
-    snapshot: {
-      key: 'snapshot',
-      label: 'Snapshot',
-      apiNetwork: metadataNetwork,
-      networks: [metadataNetwork],
-      limit: 18
-    },
+    // snapshot: {
+    //   key: 'snapshot',
+    //   label: 'Snapshot',
+    //   apiNetwork: metadataNetwork,
+    //   networks: [metadataNetwork],
+    //   limit: 18
+    // },
     'snapshot-x': {
       key: 'snapshot-x',
       label: 'Snapshot X',
@@ -106,7 +106,7 @@ export const explorePageProtocols: Record<ExplorePageProtocol, ProtocolConfig> =
         enabledNetworks.find(network => !offchainNetworks.includes(network)) ||
         'eth',
       networks: enabledNetworks.filter(
-        network => !offchainNetworks.includes(network)
+        network => !offchainNetworks.includes(network) && network === 'harmony'
       ),
       limit: 18
     }

@@ -110,7 +110,7 @@ export async function handleExecutionStrategy(
     );
 
     let quorum = 0n;
-    let destinationAddress = null;
+    let destinationAddress: any = null;
     if (executionStrategyType === 'SimpleQuorumVanilla') {
       quorum = await executionContract.quorum();
     } else if (executionStrategyType === 'EthRelayer') {

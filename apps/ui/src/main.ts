@@ -2,6 +2,8 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createPinia } from 'pinia';
 import VueTippy from 'vue-tippy';
 import App from '@/App.vue';
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import router from '@/routes';
 import '@/style.scss';
 
@@ -46,6 +48,7 @@ const app = createApp({ render: () => h(App) })
 
 app.use(pinia);
 app.use(VueQueryPlugin);
+app.use(ElementPlus);
 
 app.mount('#app');
 

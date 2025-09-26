@@ -107,9 +107,11 @@ export const METADATA: Record<string, Metadata> = {
     name: 'Harmony',
     ticker: 'ETH',
     chainId: 1666600000,
-    apiUrl: 'https://api.harmony.one',
+    // apiUrl: 'https://api.harmony.one',
+    apiUrl: 'https://hmy-snapshotx-api.fly.dev',
     avatar:
-      'ipfs://bafkreihcx4zkpfjfcs6fazjp6lcyes4pdhqx3uvnjuo5uj2dlsjopxv5am',
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3945.png',
+      // 'ipfs://bafkreihcx4zkpfjfcs6fazjp6lcyes4pdhqx3uvnjuo5uj2dlsjopxv5am',
     blockTime: 2
   }
 };

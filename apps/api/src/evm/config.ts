@@ -1,5 +1,6 @@
 import { CheckpointConfig } from '@snapshot-labs/checkpoint';
-import { evmNetworks } from '@snapshot-labs/sx';
+// import { evmNetworks } from '@snapshot-labs/sx';
+import { evmNetworks } from '../evmNetworks';
 import { MANA_URL } from '../config';
 import AxiomExecutionStrategy from './abis/AxiomExecutionStrategy.json';
 import L1AvatarExecutionStrategy from './abis/L1AvatarExecutionStrategy.json';
@@ -30,7 +31,8 @@ const START_BLOCKS: Record<NetworkID, number> = {
   mnt: 75662182,
   ape: 12100384,
   curtis: 16682282,
-  harmony: 75063578 // Замените на реальный номер блока начала
+  // harmony: 75063578 // Замените на реальный номер блока начала
+  harmony: 76300000
 };
 
 export type FullConfig = {
@@ -49,6 +51,8 @@ export type FullConfig = {
 } & CheckpointConfig;
 
 export function createConfig(indexerName: NetworkID): FullConfig {
+  console.log('indexerName', indexerName, evmNetworks[indexerName]);
+
   const network = evmNetworks[indexerName];
 
   const sources = [

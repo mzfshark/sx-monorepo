@@ -10,7 +10,7 @@ export function registerIndexer(
   config: CheckpointConfig,
   indexer: BaseIndexer
 ) {
-  if (ENABLED_NETWORKS && !ENABLED_NETWORKS.includes(indexerName)) return;
+  //if (ENABLED_NETWORKS && !ENABLED_NETWORKS.includes(indexerName)) return;
 
   instance.addIndexer(indexerName, config, indexer);
 }
