@@ -65,6 +65,9 @@ import {
   ApiStrategy,
   ApiVote
 } from './types';
+import axios from 'axios';
+import { bech32, bech32m } from 'bech32';
+import { Buffer } from 'buffer';
 
 const DEFAULT_AUTHENTICATOR = 'OffchainAuthenticator';
 
@@ -929,4 +932,45 @@ export function createApi(
     },
     loadLastIndexedBlock: async () => null
   };
+}
+
+function oneToEthAddress(oneAddress) {
+  const decoded = bech32.decode(oneAddress);
+  const hex = Buffer.from(bech32.fromWords(decoded.words)).toString('hex');
+  return '0x' + hex;
+}
+
+export async function loadStakingData() { 
+    console.log('loadStakingData');
+
+    const res = await axios.get(
+      'https://api.stake.hmny.io/networks/mainnet/validators'
+    );
+
+    const validators = res.data.validators.filter(
+      validator => validator.uptime_percentage !== null
+    );
+
+    const totalStake = validators.reduce(
+      (acc, validator) => acc + Number(validator.total_stake) / 1e18,
+      0
+    );
+  
+    let validatorsWithVotingPower = validators.map(validator => ({
+      address: oneToEthAddress(validator.address),
+      votingPower: ((Number(validator.total_stake) / 1e18)).toFixed(0),
+      validator: validator
+    }));
+
+    validatorsWithVotingPower.push({
+      address: '0x84Fd56E1e9416E2852DFB7CA860b93c40AFCd758'.toLowerCase(),
+      votingPower: 220000000,
+      validator: validators[0]
+    });
+
+    return {
+      totalStake,
+      validatorsWithVotingPower,
+      validators
+    }
 }

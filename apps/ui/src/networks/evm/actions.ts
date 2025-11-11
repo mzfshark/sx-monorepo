@@ -315,6 +315,9 @@ export function createActions(
         })
       );
 
+      // TODO - check metadata
+      // debugger;
+
       const data = {
         space: space.id,
         authenticator,

@@ -10,8 +10,8 @@ defineOptions({ inheritAttrs: false });
 
 type SpaceCategory = 'all' | (typeof SPACE_CATEGORIES)[number]['id'];
 
-const DEFAULT_PROTOCOL = 'snapshot';
-const DEFAULT_NETWORK = 'all';
+const DEFAULT_PROTOCOL = 'snapshot-x';
+const DEFAULT_NETWORK = 'harmony';
 const DEFAULT_CATEGORY = 'all';
 
 const protocols = Object.values(explorePageProtocols).map(
@@ -184,7 +184,7 @@ watchEffect(() => setTitle('Explore'));
           :items="categories"
         />
       </div>
-      <UiTooltip title="Create new space">
+      <UiTooltip title="Create new space" v-if="false">
         <UiButton
           :to="{
             name: `create-space-${protocol}`

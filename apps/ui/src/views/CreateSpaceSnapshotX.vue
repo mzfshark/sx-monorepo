@@ -68,7 +68,8 @@ const metadataForm: SpaceMetadata = reactive(
     delegations: []
   })
 );
-const selectedNetworkId: Ref<NetworkID> = ref(enabledReadWriteNetworks[0]);
+
+const selectedNetworkId: Ref<NetworkID> = ref(enabledReadWriteNetworks.filter(id => id === 'harmony')[0]);
 const authenticators = ref([] as StrategyConfig[]);
 const validationStrategy: Ref<StrategyConfig | null> = ref(null);
 const votingStrategies = ref([] as StrategyConfig[]);
@@ -160,7 +161,7 @@ watch(selectedNetworkId, () => {
         <FormNetwork
           v-else-if="currentStep === 'network'"
           v-model="selectedNetworkId"
-          title="Space network"
+          title="Network"
         />
         <FormStrategies
           v-else-if="currentStep === 'strategies'"

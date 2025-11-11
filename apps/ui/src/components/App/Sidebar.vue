@@ -7,6 +7,12 @@ const followedSpacesStore = useFollowedSpacesStore();
 <template>
   <div class="flex flex-col border-r text-center">
     <AppLink :to="{ name: 'my-home' }" class="h-[72px] block">
+      <img
+        src="/harmony-one-logo.svg" 
+        class="inline-block my-[18px] size-[40px]"
+      />
+    </AppLink>
+    <AppLink :to="{ name: 'my-home' }" class="h-[72px] block">
       <IC-zap class="inline-block my-[18px] size-[40px] text-skin-link" />
     </AppLink>
     <div

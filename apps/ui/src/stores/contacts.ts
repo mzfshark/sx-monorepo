@@ -4,9 +4,13 @@ import pkg from '../../package.json';
 
 export const useContactsStore = defineStore('contacts', {
   state: () => ({
-    contacts: useStorage(`${pkg.name}.contacts`, [] as Contact[])
+    contacts: useStorage(`${pkg.name}.contacts`, [] as Contact[]),
+    activePage: useStorage(`${pkg.name}.activePage`, '')
   }),
   actions: {
+    setActivePage(page: string) {
+      this.activePage = page;
+    },
     saveContact(payload: Contact) {
       const contact = this.contacts.find(
         contact => contact.address === payload.address

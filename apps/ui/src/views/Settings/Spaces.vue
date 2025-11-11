@@ -11,7 +11,7 @@ const protocols = Object.values(explorePageProtocols).map(
     label
   })
 );
-const DEFAULT_PROTOCOL = 'snapshot';
+const DEFAULT_PROTOCOL = 'snapshot-x';
 
 const route = useRoute();
 const router = useRouter();
@@ -57,7 +57,7 @@ watch(
           :items="protocols"
         />
       </div>
-      <UiTooltip title="Create new space">
+      <UiTooltip title="Create new space" v-if="false">
         <UiButton
           :to="{
             name: `create-space-${protocol}`

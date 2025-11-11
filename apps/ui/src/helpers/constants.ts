@@ -11,8 +11,8 @@ export const APP_NAME = 'Snapshot';
 
 export const SIDEKICK_URL = 'https://sh5.co';
 
-export const UNIFIED_API_URL =
-  import.meta.env.VITE_UNIFIED_API_URL ?? 'https://api.snapshot.box';
+export const UNIFIED_API_URL = 'https://hmy-snapshotx-api.fly.dev';
+  //import.meta.env.VITE_UNIFIED_API_URL ?? 'http://localhost:3000'; // 'https://api.snapshot.box';
 export const UNIFIED_API_TESTNET_URL =
   import.meta.env.VITE_UNIFIED_API_TESTNET_URL ??
   'https://testnet-api.snapshot.box';

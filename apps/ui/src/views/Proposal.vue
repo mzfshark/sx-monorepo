@@ -47,6 +47,10 @@ const {
   toRef(() => ['active', 'pending'].includes(proposal.value?.state || ''))
 );
 
+const isWhitelist = computed(() => {
+  return proposal.value?.strategies.includes('0x32586F6bcf6649C9e31990AAB83071D28623154b');
+})
+
 const discussion = computed(() => {
   if (!proposal.value) return null;
 
@@ -182,6 +186,24 @@ watchEffect(() => {
                 :is-active="route.name === 'space-proposal-votes'"
                 :count="proposal.vote_count"
                 text="Votes"
+                class="inline-block"
+              />
+            </AppLink>
+            <AppLink
+              v-if="isWhitelist"
+              :to="{
+                name: 'space-proposal-votes-offchain',
+                params: {
+                  proposal: proposal.proposal_id,
+                  space: `${proposal.network}:${proposal.space.id}`
+                }
+              }"
+              class="flex items-center"
+            >
+              <UiLink
+                :is-active="route.name === 'space-proposal-votes-offchain'"
+                :count="proposal.vote_count"
+                text="Final Votes"
                 class="inline-block"
               />
             </AppLink>

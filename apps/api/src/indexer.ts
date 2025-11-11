@@ -8,14 +8,19 @@ const PRODUCTION_INDEXER_DELAY = 60 * 1000;
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function startIndexer(checkpoint: Checkpoint) {
-  addStarknetIndexers(checkpoint);
+  // addStarknetIndexers(checkpoint);
   addEvmIndexers(checkpoint);
+
+  console.log(1111111)
+  console.log(1111111)
+  console.log(1111111)
+  console.log(1111111)
 
   if (process.env.NODE_ENV === 'production') {
     console.log(
       'Delaying indexer to prevent multiple processes indexing at the same time.'
     );
-    await sleep(PRODUCTION_INDEXER_DELAY);
+    // await sleep(PRODUCTION_INDEXER_DELAY);
   }
 
   await checkpoint.resetMetadata();

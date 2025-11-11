@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import ProposalOverview from '@/views/Proposal/Overview.vue';
 import ProposalVotes from '@/views/Proposal/Votes.vue';
+import ProposalVotesOffchain from '@/views/Proposal/VotesOffchain.vue';
 import Proposal from '@/views/Proposal.vue';
 import SpaceDelegates from '@/views/Space/Delegates.vue';
 import SpaceDiscussions from '@/views/Space/Discussions.vue';
@@ -38,6 +39,7 @@ export const spaceChildrenRoutes: RouteRecordRaw[] = [
         component: ProposalOverview
       },
       { path: 'votes', name: 'space-proposal-votes', component: ProposalVotes },
+      { path: 'votes-offchain', name: 'space-proposal-votes-offchain', component: ProposalVotesOffchain },
       {
         path: 'discussion',
         name: 'space-proposal-discussion',

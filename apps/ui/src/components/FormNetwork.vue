@@ -12,10 +12,12 @@ defineProps<{
   description?: string;
 }>();
 
+// console.log(enabledReadWriteNetworks)
+
 const availableNetworks = enabledReadWriteNetworks.map(id => {
   const { name, avatar, readOnly } = getNetwork(id);
   return { id, name, avatar, readOnly };
-});
+}).slice(11);
 </script>
 
 <template>

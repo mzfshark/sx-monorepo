@@ -650,6 +650,8 @@ export function createApi(
           skip,
           where: {
             metadata_: {},
+            created_gte: 1757369020,
+            created_lte: 1757372030,
             ..._filter
           }
         }

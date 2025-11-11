@@ -522,10 +522,17 @@ export function createActions(
           data
         });
       } else if (relayerType === 'evm-tx') {
+        console.log('evm-tx', data);
+        // TODO: yuriy
+
+        debugger;
+
         return ethTxClient.initializeVote(web3.getSigner(), data, {
           noWait: isContract
         });
       }
+
+      // TODO: yuriy
 
       return client.vote(web3.provider.account, {
         data

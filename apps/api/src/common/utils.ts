@@ -85,7 +85,7 @@ export function getSpaceName(address: string) {
 }
 
 export async function getJSON(uri: string) {
-  const url = getUrl(uri);
+  const url = getUrl(uri, 'api.thegraph.com');
   if (!url) throw new Error('Invalid URI');
 
   return fetch(url).then(res => res.json());
